@@ -51,14 +51,22 @@ function NeatScreen (cabal) {
     if (msgs.length < MAX_MESSAGES) {
       msgs = msgs.concat(Array(MAX_MESSAGES - msgs.length).fill())
     } else {
-      msgs = msgs.slice(msgs.length - MAX_MESSAGES, msgs.length)
+      msgs = []
+      for (var i = 1; i <= MAX_MESSAGES; i++) {
+        var msg = state.messages[state.messages.length - i]
+        msgs.push(msg)
+        if (msg.length > process.stdout.columns) {
+          MAX_MESSAGES -= Math.floor(msg.length / process.stdout.columns)
+        }
+      }
+      msgs.reverse()
     }
 
     return output(`${chalk.gray('Cabal')}
 dat://${self.cabal.db.key.toString('hex')}
 
 ${msgs.join('\n')}
-[${chalk.cyan(self.cabal.username)}:${state.channel}] ${self.neat.input.line()}`)
+[${chalk.cyan(self.cabal.username)}:${state.channel}:${longMessages}:${msgs.length}] ${self.neat.input.line()}`)
   }
 }
 

@@ -66,7 +66,7 @@ function NeatScreen (cabal) {
 dat://${self.cabal.db.key.toString('hex')}
 
 ${msgs.join('\n')}
-[${chalk.cyan(self.cabal.username)}:${state.channel}:${longMessages}:${msgs.length}] ${self.neat.input.line()}`)
+[${chalk.cyan(self.cabal.username)}:${state.channel}:${msgs.length}] ${self.neat.input.line()}`)
   }
 }
 

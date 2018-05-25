@@ -127,6 +127,7 @@ NeatScreen.prototype.loadChannel = function (channel) {
     messages.map((arr) => {
       arr.forEach((m) => {
         self.state.messages.push(self.formatMessage(m))
+        self.notify(m)
       })
     })
     self.neat.render()
@@ -154,6 +155,13 @@ NeatScreen.prototype.formatMessage = function (msg) {
     return hilight ? chalk.bgRed(chalk.black(text)) : text
   }
   return chalk.cyan('unknown message type: ') + chalk.gray(JSON.stringify(msg))
+}
+
+NeatScreen.prototype.notify = function (msg) {
+  var user = self.cabal.username
+  if (msg.content && msg.author && msg.time) {
+    if (msg.author === user) return
+  }
 }
 
 function formatTime (t) {
